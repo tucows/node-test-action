@@ -2,8 +2,13 @@ const core = require('@actions/core')
 const io = require('@actions/io')
 const exec = require('@actions/exec')
 
+const DEFAULT_REGISTRY = 'https://registry.npmjs.com/'
 const PROJECT_DIR = core.getInput('directory')
-const IS_GLOBAL_INSTALL = core.getInput('globalInstall')
+const REGISTRY = core.getInput('registry') || DEFAULT_REGISTRY
+
+const setRegistry = () => io
+	.which('npm', true)
+	.then(npm => exec.exec(npm, ['config', 'set registry', REGISTRY]))
 
 const install = () => io
 	.which('npm', true)
@@ -13,15 +18,16 @@ const install = () => io
 		if(PROJECT_DIR)
 			process.chdir(`./${PROJECT_DIR}`)
 
-		let install = IS_GLOBAL_INSTALL ? 'i -g' : 'i'
-		return exec.exec(npm, install)
+		return exec.exec(npm, 'i')
 	})
 
 const test = () => io
 	.which('npm', true)
 	.then(npm => exec.exec(npm, 'test'))
 
-install()
+
+setRegistry()
+.then(install)
 .then(test)
 .catch(error => {
 	console.error(error)
