@@ -1,5 +1,8 @@
 name: 'node-test-action'
 description: 'Run tests using node environment and `npm test`'
+branding: 
+  icon: 'check-circle'
+  color: 'white'
 runs:
   using: 'node12'
   main: 'dist/index.js'
