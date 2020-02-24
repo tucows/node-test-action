@@ -1,5 +1,5 @@
 name: 'node-test-action'
-desciption: 'Run test on push using node environment and `npm test`'
+description: 'Run test on push using node environment and `npm test`'
 runs:
   using: 'node12'
   main: 'dist/index.js'
