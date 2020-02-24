@@ -3,6 +3,7 @@ const io = require('@actions/io')
 const exec = require('@actions/exec')
 
 const PROJECT_DIR = core.getInput('directory')
+const IS_GLOBAL_INSTALL = core.getInput('globalInstall')
 
 const install = () => io
 	.which('npm', true)
@@ -12,7 +13,8 @@ const install = () => io
 		if(PROJECT_DIR)
 			process.chdir(`./${PROJECT_DIR}`)
 
-		return exec.exec(npm, 'i')
+		let install = IS_GLOBAL_INSTALL ? 'i -g' : 'i'
+		return exec.exec(npm, install)
 	})
 
 const test = () => io
