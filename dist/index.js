@@ -66,7 +66,7 @@ const install = () => io
 		if(PROJECT_DIR)
 			process.chdir(`./${PROJECT_DIR}`)
 
-		return exec.exec(npm, 'i')
+		return exec.exec(npm, ['i', '--registry', REGISTRY])
 	})
 
 const test = () => io
@@ -74,8 +74,7 @@ const test = () => io
 	.then(npm => exec.exec(npm, 'test'))
 
 
-setRegistry()
-.then(install)
+install()
 .then(test)
 .catch(error => {
 	console.error(error)
