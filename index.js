@@ -3,12 +3,8 @@ const io = require('@actions/io')
 const exec = require('@actions/exec')
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.com/'
-const PROJECT_DIR = core.getInput('directory')
 const REGISTRY = core.getInput('registry') || DEFAULT_REGISTRY
-
-const setRegistry = () => io
-	.which('npm', true)
-	.then(npm => exec.exec(npm, ['--registry', REGISTRY]))
+const PROJECT_DIR = core.getInput('directory')
 
 const install = () => io
 	.which('npm', true)
@@ -18,7 +14,7 @@ const install = () => io
 		if(PROJECT_DIR)
 			process.chdir(`./${PROJECT_DIR}`)
 
-		return exec.exec(npm, 'i')
+		return exec.exec(npm, ['i', '--registry', REGISTRY])
 	})
 
 const test = () => io
@@ -26,8 +22,7 @@ const test = () => io
 	.then(npm => exec.exec(npm, 'test'))
 
 
-setRegistry()
-.then(install)
+install()
 .then(test)
 .catch(error => {
 	console.error(error)
