@@ -56,7 +56,7 @@ const REGISTRY = core.getInput('registry') || DEFAULT_REGISTRY
 
 const setRegistry = () => io
 	.which('npm', true)
-	.then(npm => exec.exec(npm, ['config', 'set', 'registry', REGISTRY]))
+	.then(npm => exec.exec(npm, ['--registry', REGISTRY]))
 
 const install = () => io
 	.which('npm', true)
