@@ -11,7 +11,7 @@ const install = () => io
 	.then(npm => {
 		core.debug(`npm at "${npm}"`)
 
-		if(PROJECT_DIR)
+		if (PROJECT_DIR)
 			process.chdir(`./${PROJECT_DIR}`)
 
 		return exec.exec(npm, ['i', '--registry', REGISTRY])
