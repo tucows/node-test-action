@@ -1,5 +1,5 @@
-const core = require('@actions/core')
 const io = require('@actions/io')
+const core = require('@actions/core')
 const exec = require('@actions/exec')
 
 const DEFAULT_REGISTRY = 'https://registry.npmjs.com/'
